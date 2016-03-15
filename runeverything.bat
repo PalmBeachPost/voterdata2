@@ -5,7 +5,7 @@ rem call pandame.bat
 csvgrep -c county -m Pal bigfile.csv >rawpal.csv
 call pandame.bat rawpal.csv pandapal.csv
 csvgrep -c county -m Bro bigfile.csv >rawbro.csv
-call pandame.bat rawpal.csv pandabro.csv
+call pandame.bat rawbro.csv pandabro.csv
 csvgrep -c county -m Mrt bigfile.csv >rawmrt.csv
 call pandame.bat rawmrt.csv pandamrt.csv
 csvgrep -c county -m Stl bigfile.csv >rawstl.csv
