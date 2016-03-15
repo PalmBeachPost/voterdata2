@@ -1,0 +1,1 @@
+csvcut -c county,first_name,middle_name,last_name,name_suffix,gender,race,birth_date,party,area_Code,phone_Number,email,res_address_line1,res_address_line2,res_city,res_state,res_zip,mail_address_line1,mail_address_line2,mail_address_line3,mail_city,mail_state,mail_zip,mail_country %1.csv > %2.csv
