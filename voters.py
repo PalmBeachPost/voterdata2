@@ -14,12 +14,12 @@ counter = 0
 starttime = time.clock()
 print("2,000 voters are marked with .")
 
-with open('bigfile.csv', 'wb', buffersize) as outputfile:
+with open('bigfile.csv', 'w', buffersize) as outputfile:
     c = csv.writer(outputfile)
     c.writerow(["county", "id", "last_name", "name_suffix", "first_name", "middle_name", "res_address_suppress", "res_address_line1", "res_address_line2", "res_city", "res_state", "res_zip", "mail_address_line1", "mail_address_line2", "mail_address_line3", "mail_city", "mail_state", "mail_zip", "mail_country", "gender", "race", "birth_date", "reg_date", "party", "precinct", "precinct_group", "precinct_Split", "precinct_Suffix", "status", "congressional_District", "house_District", "senate_District", "county_district", "school_District", "area_Code", "phone_Number", "dummy", "email"])
     filelist = os.listdir("VoterExtract/")
     for inputfile in filelist:
-        with open("VoterExtract/" + inputfile, 'rb', buffersize) as inputcsv:
+        with open("VoterExtract/" + inputfile, 'r', buffersize) as inputcsv:
             rows = csv.reader(inputcsv, delimiter='\t')
             for row in rows:
                 for i, item in enumerate(row):

@@ -15,12 +15,12 @@ counter = 0
 starttime = time.clock()
 print("2,000 records are marked with .")
 
-with open('fullhistory.csv', 'wb', buffersize) as outputfile:
+with open('fullhistory.csv', 'w', buffersize) as outputfile:
     c = csv.writer(outputfile)
     c.writerow(["county", "id", "electiondate", "historycode"])
     filelist = os.listdir("VoterHistory/")
     for inputfile in filelist:
-        with open("VoterHistory/" + inputfile, 'rU', buffersize) as inputcsv:
+        with open("VoterHistory/" + inputfile, 'r', buffersize) as inputcsv:
             rows = csv.reader(inputcsv, delimiter='\t')
             for row in rows:
                 row[0] = capwords(row[0])

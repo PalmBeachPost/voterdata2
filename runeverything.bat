@@ -1,9 +1,11 @@
 rem All voter extract data should be in folder VoterExtract
 rem All voter history data should be in folder VoterHistory
 
-start c:\pypy\pypy voterhistory.py
+rem start c:\pypy\pypy voterhistory.py
+start c:\python36\python voterhistory.py
 
-c:\pypy\pypy voters.py
+rem c:\pypy\pypy voters.py
+c:\python36\python voters.py
 
 rem call pandame.bat
 csvgrep -c county -m Mrt bigfile.csv >rawmrt.csv
