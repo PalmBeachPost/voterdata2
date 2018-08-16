@@ -48,47 +48,6 @@ partition p134 values less than (134000000), partition p134b values less than (1
 partition premainder values less than (2147483647) );
 
 
-load data local infile 'c:\\data\\voters\\fullhistory.csv' into table voterhistory
-fields terminated by "," enclosed by '"' escaped by '"'
-lines terminated by "\r\n"
-ignore 1 lines;
-
-
-
-drop table if exists luhistorycode;
-create table luhistorycode (historycode varchar(1), text varchar(40));
-insert into luhistorycode (historycode, text) VALUES 
-("F","Provisional Ballot – Early Vote"),
-("Z","Provisional Ballot – Vote at Poll"),
-("A","Voted Absentee"),
-("B", "Absentee Ballot NOT Counted"),
-("E","Voted Early"),                                                                                         
-("N","Did Not Vote (May not be filled in)"),
-("P", "Provisional Ballot Not Counted"),                                                                     
-("Y","Voted at Polls"),
-(NULL, "Did Not Vote");                                                                                      
-
-
-
-drop table if exists voterhistorytally;
-
-create table voterhistorytally as
-select ID, count(*) as NumberOfElections, group_concat(distinct(county)) as Counties
-from voterhistory
-group by 1;
-
-
-
-
--- ---------------------------------------------------------------
--- ---------------------------------------------------------------
--- ---------------------------------------------------------------
--- ---------------------------------------------------------------
--- ---------------------------------------------------------------
--- ---------------------------------------------------------------
--- ----------------------------------------------------------------- ---------------------------------------------------------------
-
-
 use voters;
 
 drop table if exists voters;
@@ -204,10 +163,58 @@ partition Wal values in ("Wal"),
 partition Was values in ("Was")
 );
 
-
-load data local infile 'c:\\data\\voters\\bigfile.csv' into table voters fields terminated by "," enclosed by '"' escaped by '"' lines terminated by "\r\n" ignore 1 lines;
-
 alter table voters add index (id), add index (res_city), add index (res_zip), add index `fluffynames` (last_name, first_name);
+
+
+
+
+
+
+load data local infile 'd:\\data\\voters\\fullhistory.csv' into table voterhistory
+fields terminated by "," enclosed by '"' escaped by '"'
+lines terminated by "\r\n"
+ignore 1 lines;
+
+
+
+drop table if exists luhistorycode;
+create table luhistorycode (historycode varchar(1), text varchar(40));
+insert into luhistorycode (historycode, text) VALUES 
+("F","Provisional Ballot – Early Vote"),
+("Z","Provisional Ballot – Vote at Poll"),
+("A","Voted Absentee"),
+("B", "Absentee Ballot NOT Counted"),
+("E","Voted Early"),                                                                                         
+("N","Did Not Vote (May not be filled in)"),
+("P", "Provisional Ballot Not Counted"),                                                                     
+("Y","Voted at Polls"),
+(NULL, "Did Not Vote");                                                                                      
+
+
+
+drop table if exists voterhistorytally;
+
+create table voterhistorytally as
+select ID, count(*) as NumberOfElections, group_concat(distinct(county)) as Counties
+from voterhistory
+group by 1;
+
+
+
+
+-- ---------------------------------------------------------------
+-- ---------------------------------------------------------------
+-- ---------------------------------------------------------------
+-- ---------------------------------------------------------------
+-- ---------------------------------------------------------------
+-- ---------------------------------------------------------------
+-- ----------------------------------------------------------------- ---------------------------------------------------------------
+
+
+
+load data local infile 'd:\\data\\voters\\bigfile.csv' into table voters fields terminated by "," enclosed by '"' escaped by '"' lines terminated by "\r\n" ignore 1 lines;
+
+
 
 drop table if exists voterslocal;
 
@@ -384,6 +391,15 @@ create table votersnew as select * from voters where reg_date >= "2016-01-01";
     
     
     
-	
+/*
+drop table if exists partycompare;
+create table partycompare as select county, id, party as oldparty from voters201711;
+alter table partycompare add index(id), add column newparty varchar(3);
+update table partycompare, voters set partycompare.newparty=voters.party where partycompare.id=voters.id;
 
+drop table if exists temp;
+create table temp as select county, oldparty, newparty, count(*) from partycompare group by 1, 2, 3;
+
+
+*/
 
